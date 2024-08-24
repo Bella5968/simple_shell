@@ -80,19 +80,28 @@ return (buffer);
  * execute_command - Executes the command entered by the user
  * @buffer: The command to execute
  */
-void execute_command(char *buffer)
+void execute_command(char *command)
 {
-char *args[2];
 pid_t pid;
 int status;
+char *argv[MAX_ARGS];  /* Define a maximum number of arguments*/
+char *token;
+int i = 0;
 
-args[0] = buffer;
-args[1] = NULL;
+/* Tokenize the input command*/
+token = strtok(command, " \n");
+while (token != NULL && i < MAX_ARGS - 1)
+{
+argv[i++] = token;
+token = strtok(NULL, " \n");
+}
+argv[i] = NULL; /* Null-terminate the argument array*/
 
 pid = fork();
 if (pid == 0)
 {
-if (execve(args[0], args, NULL) == -1)
+/* Child process*/
+if (execve(argv[0], argv, NULL) == -1)
 {
 perror("./hsh");
 }
@@ -100,14 +109,15 @@ exit(EXIT_FAILURE);
 }
 else if (pid < 0)
 {
+/* Error forking*/
 perror("Error:");
 }
 else
 {
+/* Parent process*/
 wait(&status);
 }
 }
-
 /**
  * handle_exit - Frees memory and exits the shell
  * @buffer: The command buffer to free
