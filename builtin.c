@@ -11,7 +11,7 @@ int _myexit(info_t *info)
 {
 	int exitcheck;
 
-	if (info->argv[1])  /* If there is an exit arguement */
+	if (info->argv[1])  /* If there is an exit argument */
 	{
 		exitcheck = _erratoi(info->argv[1]);
 		if (exitcheck == -1)
@@ -80,7 +80,7 @@ int _mycd(info_t *info)
 }
 
 /**
- * _myhelp - changes the current directory of the process
+ * _myhelp - provides help for built-in commands
  * @info: Structure containing potential arguments. Used to maintain
  *          constant function prototype.
  *  Return: Always 0
@@ -93,6 +93,19 @@ int _myhelp(info_t *info)
 	_puts("help call works. Function not yet implemented \n");
 	if (0)
 		_puts(*arg_array); /* temp att_unused workaround */
+	return (0);
+}
+
+/**
+ * _myalias - handles the alias built-in command
+ * @info: Structure containing potential arguments. Used to maintain
+ *          constant function prototype.
+ *  Return: Always 0
+ */
+int _myalias(info_t *info)
+{
+	(void)info; /*cast to void to avoid unused paramener wrning */
+	_puts("alias functionality not yet implemented\n");
 	return (0);
 }
 
